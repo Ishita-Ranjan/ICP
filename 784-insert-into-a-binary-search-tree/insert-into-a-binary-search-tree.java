@@ -15,25 +15,15 @@
  */
 class Solution {
     public TreeNode insertIntoBST(TreeNode root, int val) {
-        ArrayList<Integer> list=new ArrayList<>();
-        inorder(root,list);
-        list.add(val);
-        Collections.sort(list);
-        return tree(list,0,list.size()-1);
-    }
-    public void inorder(TreeNode root, ArrayList<Integer> list){
-        if(root==null) return;
-        inorder(root.left,list);
-        list.add(root.val);
-        inorder(root.right,list);
-    }
-    public TreeNode tree(ArrayList<Integer> list,int l, int r){
-        if(l>r) return null;
-        int mid=l+(r-l)/2;
-        TreeNode node=new TreeNode();
-        node.val=list.get(mid);
-        node.left=tree(list,l,mid-1);
-        node.right=tree(list,mid+1,r);
-        return node;
+        if(root==null){
+            return  new TreeNode(val);
+        }
+        if(root.val<val){
+           root.right = insertIntoBST(root.right,val);
+        }
+        if(root.val>val){
+            root.left = insertIntoBST(root.left,val);
+        }
+        return root;
     }
 }
