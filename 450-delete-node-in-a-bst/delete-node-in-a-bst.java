@@ -15,28 +15,30 @@
  */
 class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
-        ArrayList<Integer> list=new ArrayList<>();
-        inorder(root,list);
-        for(int i=0;i<list.size();i++){
-            if(list.get(i)==key){
-                list.remove(i);
-            }
+        if(root==null) return null;
+        if(root.val>key){
+            root.left=deleteNode(root.left,key);
         }
-        return tree(list,0,list.size()-1);
+        else if(root.val<key){
+            root.right=deleteNode(root.right,key);
+        }
+        else{
+            if(root.left==null){
+                return root.right;
+            }
+            if(root.right==null){
+                return root.left;
+            }
+            TreeNode min=minimum(root.right);
+            root.val=min.val;
+            root.right=deleteNode(root.right,min.val);
+        }
+        return root;
     }
-    public void inorder(TreeNode root, ArrayList<Integer> list){
-        if(root==null) return;
-        inorder(root.left,list);
-        list.add(root.val);
-        inorder(root.right,list);
-    }
-    public TreeNode tree(ArrayList<Integer> list,int l, int r){
-        if(l>r) return null;
-        int mid=l+(r-l)/2;
-        TreeNode node=new TreeNode();
-        node.val=list.get(mid);
-        node.left=tree(list,l,mid-1);
-        node.right=tree(list,mid+1,r);
-        return node;
+    public TreeNode minimum(TreeNode root){
+        while(root.left!=null){
+            root=root.left;
+        }
+        return root;
     }
 }
