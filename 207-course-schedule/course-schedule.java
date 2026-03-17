@@ -10,10 +10,8 @@ class Solution {
             adj.get(v).add(u);
         }
         int[] indegree=new int[numCourses];
-        for(int i=0;i<numCourses;i++){
-            for(int it:adj.get(i)){
-                indegree[it]++;
-            }
+        for(int[] it : prerequisites){
+            indegree[it[0]]++;
         }
         Queue<Integer> q=new LinkedList<>();
         for(int i=0;i<numCourses;i++){
