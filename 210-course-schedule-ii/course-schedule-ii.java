@@ -21,11 +21,9 @@ class Solution {
         }
         int[] topo=new int[numCourses];
         int idx=0;
-        int c=0;
         while(!q.isEmpty()){
             int node=q.poll();
             topo[idx++]=node;
-            c++;
             for(int it:adj.get(node)){
                 indegree[it]--;
                 if(indegree[it]==0){
@@ -33,7 +31,7 @@ class Solution {
                 }
             }
         }
-        if(c!=numCourses){
+        if(idx!=numCourses){
             return new int[]{};
         }
         return topo;
